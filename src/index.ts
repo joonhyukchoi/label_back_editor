@@ -1,4 +1,4 @@
-import { server } from './src/routes/socketRoute';
+import { server } from './routes/socketRoute';
 
 const sslport = 443;
 

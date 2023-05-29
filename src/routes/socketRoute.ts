@@ -10,7 +10,6 @@ import { ENCRYPT_URL } from '../constants/constant';
 // eslint-disable-next-line import/namespace
 import { findDefaultPage, updateEditor, getSingedUrl } from '../controllers/socketController';
 import { Server } from 'socket.io';
-import http from 'http';
 import { EditorInterface } from '../interfaces/editorInterface';
 
 dotenv.config();
@@ -26,16 +25,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.post('/users/sign', getSingedUrl);
 
-// export const server = HTTPS.createServer(
-//   {
-//     ca: fs.readFileSync(ENCRYPT_URL.CA_URL),
-//     key: fs.readFileSync(path.resolve(process.cwd(), ENCRYPT_URL.KEY_URL), 'utf8').toString(),
-//     cert: fs.readFileSync(path.resolve(process.cwd(), ENCRYPT_URL.CERT_URL), 'utf8').toString(),
-//   },
-//   app
-// );
-
-export const server = http.createServer(app);
+export const server = HTTPS.createServer(
+  {
+    ca: fs.readFileSync(ENCRYPT_URL.CA_URL),
+    key: fs.readFileSync(path.resolve(process.cwd(), ENCRYPT_URL.KEY_URL), 'utf8').toString(),
+    cert: fs.readFileSync(path.resolve(process.cwd(), ENCRYPT_URL.CERT_URL), 'utf8').toString(),
+  },
+  app
+);
 
 const io = new Server(server, {});
 
